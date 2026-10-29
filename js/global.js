@@ -7,7 +7,7 @@
    CONFIG
    Change the backend URL here if your port changes
 ----------------------------------------------- */
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'http://https://backend-zvo3.onrender.com';
 
 /* -----------------------------------------------
    AGE VERIFICATION BANNER
