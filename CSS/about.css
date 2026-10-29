@@ -1,0 +1,348 @@
+/* ==============================================
+   ABOUT.CSS — About page styles
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   ABOUT HERO — compact header
+----------------------------------------------- */
+.about-hero {
+  position: relative;
+  padding: calc(var(--nav-height) + 80px) 40px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Gold line + label above the title */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  width: 60px; height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+.hero-eyebrow span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.about-hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.about-hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.about-hero p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0.65;
+  letter-spacing: 0.06em;
+}
+
+/* -----------------------------------------------
+   STORY SECTION — two-column layout
+----------------------------------------------- */
+.about-story {
+  position: relative;
+  padding: 80px 40px;
+  overflow: hidden;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* LEFT — visual panel */
+.story-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Frosted glass frame for the logo */
+.story-img-frame {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;
+  background: rgba(61, 36, 16, 0.5);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.story-img-inner img {
+  width: 100%;
+  filter: brightness(0) invert(1);   /* white logo */
+  opacity: 0.9;
+}
+
+/* -----------------------------------------------
+   FLOATING LOCATION BADGE — shaped like a gold bar
+   Corners are cut diagonally to read as an ingot,
+   with a metallic gradient and a glossy highlight.
+----------------------------------------------- */
+.story-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 18px 30px;
+  color: var(--chocolate);
+
+  /* Metallic gold gradient — gives the bar its sheen */
+  background: linear-gradient(120deg, #F3D98B 0%, #E8C06A 22%, #C9993A 55%, #9c7530 100%);
+
+  /* Cuts the top-left and bottom-right corners diagonally,
+     turning the rectangle into an ingot-like bar silhouette */
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+
+  /* Drop shadow for lift + inner highlight/shadow for a metallic feel */
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Each segment separated by a thin divider, like sections stamped on a bar */
+.badge-year {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  padding-right: 16px;
+  border-right: 1px solid rgba(44, 26, 14, 0.3);
+}
+
+.badge-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1;
+  padding: 0 16px;
+  border-right: 1px solid rgba(44, 26, 14, 0.3);
+  white-space: nowrap;
+}
+
+.badge-city {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+  padding-left: 16px;
+  white-space: nowrap;
+}
+
+/* RIGHT — story text */
+.story-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.story-text h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+}
+
+.story-text h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.story-text p {
+  font-size: 0.92rem;
+  color: var(--cream);
+  opacity: 0.7;
+  line-height: 1.9;
+}
+
+/* Three value pills */
+.story-values {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.value-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201, 153, 58, 0.08);
+  border: 1px solid rgba(201, 153, 58, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+
+.value-icon { font-size: 1.5rem; }
+
+.value-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------
+   WHAT WE OFFER SECTION
+----------------------------------------------- */
+.about-offers {
+  position: relative;
+  padding: 80px 40px;
+  overflow: hidden;
+}
+
+/* 4-column offers grid */
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Individual offer card */
+.offer-card {
+  background: rgba(61, 36, 16, 0.55);
+  border: 1px solid rgba(201, 153, 58, 0.2);
+  border-radius: var(--radius);
+  backdrop-filter: blur(16px);
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform var(--transition), border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.offer-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 153, 58, 0.5);
+}
+
+.offer-icon { font-size: 2.5rem; }
+
+.offer-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.offer-card p {
+  font-size: 0.85rem;
+  color: var(--cream);
+  opacity: 0.6;
+  line-height: 1.7;
+}
+
+/* -----------------------------------------------
+   CTA SECTION
+----------------------------------------------- */
+.about-cta {
+  position: relative;
+  padding: 100px 40px;
+  text-align: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(201, 153, 58, 0.15);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cta-content h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: var(--cream);
+}
+
+.cta-content h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cta-content p {
+  font-size: 0.95rem;
+  color: var(--cream);
+  opacity: 0.6;
+  max-width: 400px;
+}
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 768px) {
+  .about-hero  { padding: calc(var(--nav-height) + 40px) 20px 60px; }
+  .about-story { padding: 60px 20px; }
+
+  /* Stack story columns on mobile */
+  .story-grid  { grid-template-columns: 1fr; gap: 40px; }
+
+  .story-badge { right: 10px; bottom: -10px; }
+
+  .about-offers { padding: 60px 20px; }
+  .about-cta    { padding: 60px 20px; }
+}

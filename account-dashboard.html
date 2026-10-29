@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Account – SASS BOTTLE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/account.css"/>
+  <link rel="stylesheet" href="css/account-dashboard.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       ACCOUNT DASHBOARD
+  ============================================= -->
+  <main class="dash-page">
+
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="dash-header">
+      <div>
+        <div class="hero-eyebrow"><span>My Account</span></div>
+        <h1>Welcome back, <em id="dashName">—</em></h1>
+      </div>
+      <button class="btn-outline" id="logoutBtn">Logout</button>
+    </div>
+
+    <!-- =============================================
+         PROFILE CARD
+    ============================================= -->
+    <div class="dash-card">
+      <h2>Profile</h2>
+      <div class="profile-grid">
+        <div class="profile-row"><span>Full Name</span><span id="profileName"></span></div>
+        <div class="profile-row"><span>Phone</span><span id="profilePhone"></span></div>
+        <div class="profile-row"><span>Email</span><span id="profileEmail"></span></div>
+        <div class="profile-row"><span>Default Address</span><span id="profileAddress"></span></div>
+      </div>
+
+      <!-- Edit default address form -->
+      <div class="edit-address-wrap">
+        <label for="editAddress">Update Default Address (optional)</label>
+        <div class="edit-address-row">
+          <input type="text" id="editAddress" placeholder="e.g. Kansanga, next to Shell station"/>
+          <button class="btn-primary" id="saveAddressBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         ORDER HISTORY
+    ============================================= -->
+    <div class="dash-card">
+      <h2>Order History</h2>
+
+      <div class="dash-orders-wrap" id="ordersWrap">
+        <div class="dash-loading">Loading your orders…</div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/account-dashboard.js"></script>
+
+</body>
+</html>

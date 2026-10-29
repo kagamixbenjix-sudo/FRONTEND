@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart – SASS BOTTLE</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <!-- Cart page specific styles -->
+  <link rel="stylesheet" href="css/cart.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       AGE VERIFICATION BANNER
+  ============================================= -->
+  <div class="age-banner" id="ageBanner">
+    <p>By browsing this site you confirm you are of <span>legal drinking age</span> in your country of residence.</p>
+    <div class="age-banner-actions">
+      <button class="btn-age-confirm" id="ageConfirmBtn">I confirm</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       CART PAGE
+  ============================================= -->
+  <main class="cart-page">
+
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <!-- Page header -->
+    <div class="cart-header">
+      <h1>Your <em>Cart</em></h1>
+      <a href="shop.html" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- =============================================
+         EMPTY CART STATE
+         Shown when there are no items in the cart
+    ============================================= -->
+    <div class="cart-empty" id="cartEmpty" style="display:none;">
+      <div class="empty-icon">🛒</div>
+      <h2>Your cart is empty</h2>
+      <p>Add some bottles to get started!</p>
+      <a href="shop.html" class="btn-primary" style="margin-top:24px;">Browse the Shop</a>
+    </div>
+
+    <!-- =============================================
+         CART CONTENT — shown when cart has items
+    ============================================= -->
+    <div class="cart-content" id="cartContent" style="display:none;">
+
+      <!-- LEFT — cart items list + order form -->
+      <div class="cart-left">
+
+        <!-- Cart items list — filled by cart.js -->
+        <div class="cart-items" id="cartItems"></div>
+
+        <!-- Divider -->
+        <div class="form-divider"></div>
+
+        <!-- ORDER FORM -->
+        <div class="order-form">
+          <h2 class="form-title">Delivery Details</h2>
+
+          <!-- Customer name -->
+          <div class="form-group">
+            <label for="customerName">Full Name *</label>
+            <input type="text" id="customerName" placeholder="e.g. John Mukasa" required/>
+          </div>
+
+          <!-- Phone number -->
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number *</label>
+            <input type="tel" id="phoneNumber" placeholder="e.g. 0700 000 000" required/>
+          </div>
+
+          <!-- Delivery zone — loaded from backend -->
+          <div class="form-group">
+            <label for="deliveryZone">Delivery Zone *</label>
+            <select id="deliveryZone" required>
+              <option value="">— Select your zone —</option>
+              <!-- Options injected by cart.js from GET /delivery-zones -->
+            </select>
+          </div>
+
+          <!-- Delivery fee info — updates when zone is selected -->
+          <div class="zone-fee-info" id="zoneFeeInfo" style="display:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+            </svg>
+            <span id="zoneFeeText"></span>
+          </div>
+
+          <!-- Precise delivery address -->
+          <div class="form-group">
+            <label for="deliveryAddress">Precise Address *</label>
+            <input type="text" id="deliveryAddress"
+                   placeholder="e.g. Kansanga, next to Shell station" required/>
+          </div>
+
+          <!-- Payment method -->
+          <div class="form-group">
+            <label>Payment Method *</label>
+            <div class="payment-options">
+
+              <!-- Cash on delivery -->
+              <label class="payment-option" id="optCash">
+                <input type="radio" name="payment" value="Cash" checked/>
+                <div class="payment-card">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span>Cash on Delivery</span>
+                </div>
+              </label>
+
+              <!-- Mobile Money -->
+              <label class="payment-option" id="optMobile">
+                <input type="radio" name="payment" value="Mobile Money"/>
+                <div class="payment-card">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.8">
+                    <rect x="5" y="2" width="14" height="20" rx="2"/>
+                    <line x1="12" y1="18" x2="12" y2="18"/>
+                  </svg>
+                  <span>Mobile Money</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Mobile Money USSD link — shown when Mobile Money is selected -->
+          <div class="mobile-money-info" id="mobilMoneyInfo" style="display:none;">
+            <p>Tap the button below to open your Mobile Money app with the amount pre-filled:</p>
+            <!-- Link built dynamically by cart.js with the total amount -->
+            <a id="ussdLink" href="#" class="btn-ussd">Open Mobile Money</a>
+          </div>
+
+          <!-- Optional note to the delivery person -->
+          <div class="form-group">
+            <label for="orderNote">Note (optional)</label>
+            <textarea id="orderNote" rows="3"
+                      placeholder="Any special instructions for delivery…"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT — sticky order summary -->
+      <div class="cart-right">
+        <div class="order-summary" id="orderSummary">
+          <h3>Order Summary</h3>
+
+          <!-- Summary lines filled by cart.js -->
+          <div class="summary-lines" id="summaryLines"></div>
+
+          <div class="summary-divider"></div>
+
+          <!-- Subtotal -->
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summarySubtotal">—</span>
+          </div>
+
+          <!-- Delivery fee — updates when zone is selected -->
+          <div class="summary-row">
+            <span>Delivery</span>
+            <span id="summaryDelivery">Select zone</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <!-- Grand total -->
+          <div class="summary-row summary-total">
+            <span>Total</span>
+            <span id="summaryTotal">—</span>
+          </div>
+
+          <!-- Place Order button -->
+          <button class="btn-place-order" id="placeOrderBtn">
+            Place Order
+          </button>
+
+          <!-- Error message shown on validation failure -->
+          <div class="order-error" id="orderError" style="display:none;"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+      <p>Premium spirits and beverages delivered to your door across Kampala.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256000000000">+256 000 000 000</a></li>
+        <li><a href="contact.html">Kansanga, Kampala</a></li>
+        <li><a href="contact.html">Mon – Sat: 9am – 8pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SASS BOTTLE. All rights reserved.</span>
+      <span>Drink responsibly. 18+</span>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/cart.js"></script>
+
+</body>
+</html>

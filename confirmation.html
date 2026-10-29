@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmed – SASS BOTTLE</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <!-- Confirmation page specific styles -->
+  <link rel="stylesheet" href="css/confirmation.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       CONFIRMATION PAGE
+  ============================================= -->
+  <main class="confirmation-page">
+
+    <!-- Bokeh background -->
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="confirmation-card">
+
+      <!-- Animated checkmark icon -->
+      <div class="check-circle" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6L9 17l-5-5"/>
+        </svg>
+      </div>
+
+      <!-- Main confirmation message -->
+      <h1>Order <em>Confirmed!</em></h1>
+      <p class="confirmation-subtitle">
+        Thank you for your order. We have received it and will start preparing your delivery.
+      </p>
+
+      <!-- Order details box -->
+      <div class="order-details-box">
+
+        <!-- Order ID — read from URL ?order_id= -->
+        <div class="order-detail-row">
+          <span class="detail-label">Order Number</span>
+          <span class="detail-value" id="orderIdDisplay">#—</span>
+        </div>
+
+        <div class="order-detail-divider"></div>
+
+        <!-- Total amount — read from URL ?total= -->
+        <div class="order-detail-row">
+          <span class="detail-label">Total Paid</span>
+          <span class="detail-value gold" id="orderTotalDisplay">—</span>
+        </div>
+
+        <div class="order-detail-divider"></div>
+
+        <!-- Estimated delivery -->
+        <div class="order-detail-row">
+          <span class="detail-label">Estimated Delivery</span>
+          <span class="detail-value">Same day if ordered before 6 PM</span>
+        </div>
+
+      </div>
+
+      <!-- What happens next -->
+      <div class="next-steps">
+        <h3>What happens next?</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-text">
+              <strong>We prepare your order</strong>
+              <span>Your bottles are being packed carefully</span>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-text">
+              <strong>Out for delivery</strong>
+              <span>Our rider heads to your address</span>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-text">
+              <strong>Delivered to your door</strong>
+              <span>Enjoy your SASS BOTTLE selection!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="confirmation-actions">
+        <!-- Continue shopping — pulsing button -->
+        <a href="shop.html" class="btn-pulse">Continue Shopping</a>
+        <!-- Go back home -->
+        <a href="index.html" class="btn-outline">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+      <p>Premium spirits and beverages delivered to your door across Kampala.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256000000000">+256 000 000 000</a></li>
+        <li><a href="contact.html">Kansanga, Kampala</a></li>
+        <li><a href="contact.html">Mon – Sat: 9am – 8pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SASS BOTTLE. All rights reserved.</span>
+      <span>Drink responsibly. 18+</span>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/confirmation.js"></script>
+
+</body>
+</html>

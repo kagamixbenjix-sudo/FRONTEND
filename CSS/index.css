@@ -1,0 +1,200 @@
+/* ==============================================
+   INDEX.CSS — Styles specific to the homepage
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   HERO SECTION
+   Full-screen with animated gradient background
+   simulating a dark video until real footage arrives
+----------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: calc(var(--nav-height) + 40px) 20px 80px;
+  overflow: hidden;
+}
+
+/* Slow-shifting gradient — acts as a video placeholder */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a0a04 0%, #2C1A0E 40%, #3D1508 70%, #1a0a04 100%);
+  background-size: 400% 400%;
+  animation: heroShift 12s ease infinite;
+  z-index: 0;
+}
+
+@keyframes heroShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hero text content sits above the background */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+/* Gold line + label above the main title */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  width: 60px; height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+.hero-eyebrow span {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+/* Italic gold "BOTTLE" — editorial highlight */
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0.75;
+  margin-bottom: 48px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Scroll indicator at the bottom of the hero */
+.hero-scroll {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;        /* behind the buttons */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.4;
+  pointer-events: none;   
+  /* unclickable — decorative only */
+}
+
+.hero-scroll span {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.hero-scroll-line {
+  width: 1px; height: 40px;
+  background: var(--gold);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.3); }
+}
+
+/* -----------------------------------------------
+   BRAND VALUE STRIP
+   Trust signals between hero and product section
+----------------------------------------------- */
+.brand-strip {
+  border-top: 1px solid rgba(201, 153, 58, 0.2);
+  border-bottom: 1px solid rgba(201, 153, 58, 0.2);
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.brand-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+.brand-strip-item svg   { color: var(--gold); }
+.brand-strip-item span  {
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* -----------------------------------------------
+   FEATURED PRODUCTS SECTION
+----------------------------------------------- */
+.section-featured {
+  position: relative;
+  padding: 100px 40px;
+  overflow: hidden;
+}
+
+/* Product grid — auto-fill, minimum 220px per card */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* "View full catalogue" link below the grid */
+.section-footer {
+  text-align: center;
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 768px) {
+  .section-featured { padding: 60px 20px; }
+  .brand-strip { gap: 24px; padding: 20px; }
+}

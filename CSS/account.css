@@ -1,0 +1,140 @@
+/* ==============================================
+   ACCOUNT.CSS — Customer login/register page
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+================================================ */
+
+.account-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nav-height) + 30px) 20px 40px;
+  overflow: hidden;
+}
+
+.account-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(61, 36, 16, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  padding: 44px 40px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.account-logo {
+  height: 70px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+/* -----------------------------------------------
+   SIGN IN / CREATE ACCOUNT TOGGLE
+----------------------------------------------- */
+.account-toggle {
+  display: flex;
+  width: 100%;
+  background: rgba(44, 26, 14, 0.5);
+  border-radius: 24px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.toggle-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  opacity: 0.6;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), opacity var(--transition);
+}
+
+.toggle-btn.active {
+  background: var(--gold);
+  color: var(--chocolate);
+  opacity: 1;
+}
+
+/* -----------------------------------------------
+   FORMS
+----------------------------------------------- */
+.account-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--cream);
+  opacity: 0.55;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.form-group input {
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 8px;
+  color: var(--cream);
+  font-size: 0.9rem;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.form-group input::placeholder { opacity: 0.35; }
+.form-group input:focus { border-color: var(--gold); }
+
+.account-error {
+  background: rgba(235, 87, 87, 0.08);
+  border: 1px solid rgba(235, 87, 87, 0.25);
+  color: #eb5757;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* -----------------------------------------------
+   GUEST CHECKOUT NOTE
+----------------------------------------------- */
+.guest-note {
+  font-size: 0.8rem;
+  color: var(--cream);
+  opacity: 0.5;
+  text-align: center;
+}
+.guest-note a {
+  color: var(--gold);
+  font-weight: 600;
+}
+.guest-note a:hover { opacity: 0.8; }

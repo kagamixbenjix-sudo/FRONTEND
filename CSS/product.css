@@ -1,0 +1,359 @@
+/* ==============================================
+   PRODUCT.CSS — Styles for the product detail page
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   PRODUCT PAGE WRAPPER
+----------------------------------------------- */
+.product-page {
+  position: relative;
+  min-height: 80vh;
+  padding: calc(var(--nav-height) + 40px) 40px 80px;
+  overflow: hidden;
+}
+
+/* -----------------------------------------------
+   BACK LINK
+----------------------------------------------- */
+.product-back {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 40px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.55;
+  transition: opacity var(--transition), color var(--transition);
+}
+
+.back-link:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
+/* -----------------------------------------------
+   LOADING & ERROR STATES
+----------------------------------------------- */
+.product-loading,
+.product-error {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--cream);
+  opacity: 0.5;
+  font-size: 0.95rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------
+   PRODUCT DETAIL LAYOUT
+   Two-column: image left, info right
+----------------------------------------------- */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  align-items: start;
+}
+
+/* -----------------------------------------------
+   LEFT PANEL — Product image
+----------------------------------------------- */
+.product-img-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Frosted glass image container */
+.product-img-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* Same soft gold spotlight glow used on the shop cards, for consistency */
+  background:
+    radial-gradient(circle at center, rgba(201, 153, 58, 0.18) 0%, transparent 65%),
+    rgba(61, 36, 16, 0.55);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  /* Breathing room around the photo — replaces the old 70%-of-box
+     sizing trick on the image, which was unreliable */
+  padding: 50px;
+}
+
+.product-img-box img {
+  /* The image fills its (padded) box completely, and object-fit
+     handles centering the actual photo content within that box —
+     this is far more reliable than percentage sizing + flex centering */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.product-img-box:hover img {
+  transform: scale(1.05);
+}
+
+/* Large emoji placeholder when no image exists */
+.product-img-box .product-img-placeholder {
+  font-size: 7rem;
+  opacity: 0.35;
+}
+
+/* Category badge below the image */
+.product-category-badge {
+  display: inline-block;
+  background: rgba(201, 153, 58, 0.15);
+  border: 1px solid rgba(201, 153, 58, 0.4);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 20px;
+}
+
+/* -----------------------------------------------
+   RIGHT PANEL — Product information
+----------------------------------------------- */
+.product-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Product name */
+.product-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+/* Large gold price */
+.product-price-display {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* Meta info: volume, origin, ABV */
+.product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-tag {
+  background: rgba(201, 153, 58, 0.1);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  color: var(--cream);
+  opacity: 0.75;
+}
+
+.meta-tag span {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* Description text */
+.product-description {
+  font-size: 0.92rem;
+  color: var(--cream);
+  opacity: 0.7;
+  line-height: 1.8;
+}
+
+/* Tasting notes block */
+.product-tasting {
+  background: rgba(201, 153, 58, 0.07);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  font-size: 0.88rem;
+  color: var(--cream);
+  opacity: 0.75;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.product-tasting strong {
+  color: var(--gold);
+  font-style: normal;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Gold divider line */
+.product-divider {
+  height: 1px;
+  background: rgba(201, 153, 58, 0.2);
+}
+
+/* -----------------------------------------------
+   QUANTITY SELECTOR + ADD TO CART BUTTON
+----------------------------------------------- */
+.product-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Quantity selector box */
+.qty-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid rgba(201, 153, 58, 0.35);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+/* +/- buttons */
+.qty-btn {
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  font-size: 1.2rem;
+  width: 40px; height: 40px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-btn:hover {
+  background: rgba(201, 153, 58, 0.15);
+  color: var(--gold);
+}
+
+/* Quantity number display */
+.qty-value {
+  min-width: 40px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
+  border-left: 1px solid rgba(201, 153, 58, 0.2);
+  border-right: 1px solid rgba(201, 153, 58, 0.2);
+  padding: 8px 0;
+}
+
+/* Add to Cart button — shimmer style like Buy Now */
+.btn-add-cart {
+  flex: 1;
+  background: var(--gold);
+  color: var(--chocolate);
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition), transform var(--transition);
+}
+
+/* Shimmer sweep on the Add to Cart button */
+.btn-add-cart::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: shimmer 2.2s ease-in-out infinite;
+}
+
+.btn-add-cart:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* Out of stock state */
+.btn-add-cart:disabled {
+  background: rgba(201, 153, 58, 0.3);
+  color: rgba(245, 237, 216, 0.4);
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-add-cart:disabled::after { animation: none; }
+
+/* Stock status text */
+.stock-status {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.stock-status.in-stock  { color: #6fcf97; }   /* green */
+.stock-status.out-stock { color: #eb5757; }   /* red  */
+
+/* -----------------------------------------------
+   RELATED PRODUCTS SECTION
+----------------------------------------------- */
+.related-section {
+  position: relative;
+  padding: 60px 40px 80px;
+  overflow: hidden;
+}
+
+.related-section .products-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 768px) {
+  .product-page { padding: calc(var(--nav-height) + 20px) 20px 60px; }
+
+  /* Stack image and info vertically on mobile */
+  .product-detail {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .product-img-box { aspect-ratio: 4 / 3; }
+
+  .product-actions { flex-direction: column; }
+  .btn-add-cart    { width: 100%; }
+
+  .related-section { padding: 40px 20px 60px; }
+}

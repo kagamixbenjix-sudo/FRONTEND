@@ -1,0 +1,204 @@
+/* ==============================================
+   SHOP.CSS — Styles specific to the shop page
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   SHOP HERO — compact header (not full screen)
+----------------------------------------------- */
+.shop-hero {
+  position: relative;
+  padding: calc(var(--nav-height) + 60px) 40px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.shop-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.shop-hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+/* Italic "Collection" in gold — editorial accent */
+.shop-hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.shop-hero p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0.65;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------
+   FILTER & SORT BAR
+   Sticky below the nav when scrolling
+----------------------------------------------- */
+.filter-bar {
+  position: sticky;
+  top: var(--nav-height);  /* sticks just below the nav */
+  z-index: 900;
+  background: rgba(44, 26, 14, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201, 153, 58, 0.2);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* -----------------------------------------------
+   CATEGORY FILTER CHIPS
+   Horizontal scrollable row of filter buttons
+----------------------------------------------- */
+.filter-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;        /* scroll horizontally on small screens */
+  scrollbar-width: none;   /* hide scrollbar on Firefox */
+  flex: 1;
+}
+
+/* Hide scrollbar on Chrome/Safari */
+.filter-chips::-webkit-scrollbar { display: none; }
+
+/* Each category chip button */
+.chip {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(201, 153, 58, 0.35);
+  color: var(--cream);
+  opacity: 0.7;
+  padding: 7px 18px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition),
+              border-color var(--transition), opacity var(--transition);
+}
+
+/* Active / selected chip */
+.chip.active,
+.chip:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--chocolate);
+  opacity: 1;
+}
+
+/* -----------------------------------------------
+   SORT DROPDOWN
+----------------------------------------------- */
+.sort-wrap {
+  flex-shrink: 0;
+}
+
+.sort-wrap select {
+  background: rgba(61, 36, 16, 0.8);
+  border: 1px solid rgba(201, 153, 58, 0.35);
+  color: var(--cream);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.sort-wrap select:hover,
+.sort-wrap select:focus {
+  border-color: var(--gold);
+}
+
+/* Fix dropdown option colors on Windows */
+.sort-wrap select option {
+  background: var(--chocolate-mid);
+  color: var(--cream);
+}
+
+/* -----------------------------------------------
+   PRODUCTS SECTION
+----------------------------------------------- */
+.shop-products {
+  position: relative;
+  padding: 50px 40px 80px;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+/* "Showing X products" text */
+.results-info {
+  position: relative;
+  z-index: 1;
+  font-size: 0.82rem;
+  color: var(--cream);
+  opacity: 0.45;
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+}
+
+/* Product grid — auto-fill, minimum 220px per card */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* -----------------------------------------------
+   NO RESULTS MESSAGE
+----------------------------------------------- */
+.no-results {
+  text-align: center;
+  padding: 80px 20px;
+  grid-column: 1 / -1;
+  color: var(--cream);
+  opacity: 0.5;
+}
+
+.no-results p { font-size: 0.95rem; margin-top: 8px; }
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 768px) {
+  .shop-hero  { padding: calc(var(--nav-height) + 30px) 20px 40px; }
+
+  .filter-bar {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .filter-chips { width: 100%; }
+
+  .sort-wrap { width: 100%; }
+  .sort-wrap select { width: 100%; }
+
+  .shop-products { padding: 30px 16px 60px; }
+}

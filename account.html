@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Account – SASS BOTTLE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/account.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       ACCOUNT PAGE — Login / Register toggle
+  ============================================= -->
+  <main class="account-page">
+
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="account-card">
+
+      <img src="assets/logo.svg" alt="SASS BOTTLE" class="account-logo"/>
+
+      <!-- Toggle between Sign In and Create Account -->
+      <div class="account-toggle">
+        <button class="toggle-btn active" id="showLoginBtn">Sign In</button>
+        <button class="toggle-btn" id="showRegisterBtn">Create Account</button>
+      </div>
+
+      <!-- =============================================
+           SIGN IN FORM
+      ============================================= -->
+      <form id="loginForm" class="account-form">
+        <p class="form-subtitle">Welcome back — sign in to see your orders</p>
+
+        <div class="form-group">
+          <label for="loginPhone">Phone Number</label>
+          <input type="tel" id="loginPhone" placeholder="e.g. 0700 000 000" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Your password" required/>
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginBtn" style="width:100%; text-align:center;">
+          Sign In
+        </button>
+
+        <div class="account-error" id="loginError" style="display:none;"></div>
+      </form>
+
+      <!-- =============================================
+           CREATE ACCOUNT FORM
+      ============================================= -->
+      <form id="registerForm" class="account-form" style="display:none;">
+        <p class="form-subtitle">Create an account to track your orders and checkout faster</p>
+
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <input type="text" id="regName" placeholder="Your name" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="regPhone">Phone Number</label>
+          <input type="tel" id="regPhone" placeholder="e.g. 0700 000 000" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="regEmail">Email (optional)</label>
+          <input type="email" id="regEmail" placeholder="you@example.com"/>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" placeholder="Choose a password" required minlength="6"/>
+        </div>
+
+        <button type="submit" class="btn-primary" id="registerBtn" style="width:100%; text-align:center;">
+          Create Account
+        </button>
+
+        <div class="account-error" id="registerError" style="display:none;"></div>
+      </form>
+
+      <!-- Guest checkout reminder -->
+      <p class="guest-note">
+        Just browsing? You can also
+        <a href="shop.html">checkout as a guest</a> — no account needed.
+      </p>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/account.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+/* ==============================================
+   ADMIN-REPORTS.CSS — Sales report page styles
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css + admin-dashboard.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   REPORT CARD — reusable container for each chart
+----------------------------------------------- */
+.report-card {
+  background: rgba(61, 36, 16, 0.4);
+  border: 1px solid rgba(201, 153, 58, 0.2);
+  border-radius: var(--radius);
+  backdrop-filter: blur(16px);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.report-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.report-card-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+/* -----------------------------------------------
+   TWO-COLUMN GRID — top products + category charts
+----------------------------------------------- */
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.report-grid .report-card { margin-bottom: 0; }
+
+/* -----------------------------------------------
+   PERIOD TOGGLE — 7 days / 30 days
+----------------------------------------------- */
+.period-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.period-btn {
+  background: transparent;
+  border: 1px solid rgba(201, 153, 58, 0.3);
+  color: var(--cream);
+  opacity: 0.65;
+  padding: 6px 16px;
+  border-radius: 16px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), opacity var(--transition);
+}
+.period-btn.active,
+.period-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--chocolate);
+  opacity: 1;
+}
+
+/* -----------------------------------------------
+   CHART CONTAINERS
+----------------------------------------------- */
+.chart-wrap {
+  position: relative;
+  height: 260px;
+}
+.chart-wrap-tall { height: 300px; }
+.chart-wrap-small { height: 220px; }
+
+/* -----------------------------------------------
+   STATUS BREAKDOWN — doughnut + legend side by side
+----------------------------------------------- */
+.status-breakdown-wrap {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.status-breakdown-wrap .chart-wrap { flex-shrink: 0; width: 220px; }
+
+.status-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.status-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+}
+
+.status-legend-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cream);
+}
+
+.status-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-legend-count {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* -----------------------------------------------
+   EMPTY STATE — shown when there's no data yet
+----------------------------------------------- */
+.report-empty {
+  text-align: center;
+  color: var(--cream);
+  opacity: 0.4;
+  font-size: 0.85rem;
+  padding: 40px 0;
+}
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 900px) {
+  .report-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .report-card { padding: 18px; }
+  .status-breakdown-wrap { flex-direction: column; align-items: stretch; }
+  .status-breakdown-wrap .chart-wrap { width: 100%; margin: 0 auto; }
+}

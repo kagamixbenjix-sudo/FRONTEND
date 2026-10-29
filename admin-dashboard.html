@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard – SASS BOTTLE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/admin-dashboard.css"/>
+  <link rel="stylesheet" href="css/admin-products.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       ADMIN TOP BAR
+       Simpler than the public nav — logo, title, logout
+  ============================================= -->
+  <nav class="admin-nav">
+    <div class="admin-nav-left">
+      <img src="assets/logo.svg" alt="SASS BOTTLE" class="admin-logo"/>
+      <span class="admin-title">Admin Dashboard</span>
+    </div>
+    <div class="admin-nav-right">
+      <span class="admin-username" id="adminUsernameDisplay"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Tab navigation between Orders and Products -->
+  <div class="admin-tabs">
+    <a href="admin-dashboard.html" class="admin-tab active">Orders</a>
+    <a href="admin-products.html" class="admin-tab">Products</a>
+    <a href="admin-reports.html" class="admin-tab">Reports</a>
+  </div>
+
+  <!-- Ambient animated bokeh background, fixed behind the whole page -->
+  <div class="admin-bokeh bokeh-bg" aria-hidden="true">
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+  </div>
+
+  <main class="admin-page">
+
+    <div class="admin-eyebrow"><span>Store Management</span></div>
+
+    <!-- =============================================
+         STATS CARDS — quick overview numbers
+    ============================================= -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <span class="stat-label">Total Orders</span>
+          <span class="stat-value" id="statTotalOrders">—</span>
+        </div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <span class="stat-label">Pending Orders</span>
+          <span class="stat-value" id="statPendingOrders">—</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <span class="stat-label">Today's Revenue</span>
+          <span class="stat-value" id="statTodayRevenue">—</span>
+        </div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon">📈</div>
+        <div class="stat-info">
+          <span class="stat-label">Total Revenue</span>
+          <span class="stat-value" id="statTotalRevenue">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         ORDERS SECTION
+    ============================================= -->
+    <div class="orders-section">
+
+      <div class="orders-header">
+        <h2>Orders</h2>
+
+        <!-- Status filter chips -->
+        <div class="status-filters" id="statusFilters">
+          <button class="status-chip active" data-status="">All</button>
+          <button class="status-chip" data-status="Pending">Pending</button>
+          <button class="status-chip" data-status="Processing">Processing</button>
+          <button class="status-chip" data-status="Delivered">Delivered</button>
+          <button class="status-chip" data-status="Cancelled">Cancelled</button>
+        </div>
+      </div>
+
+      <!-- Orders table -->
+      <div class="orders-table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Zone</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr><td colspan="8" class="loading-row">Loading orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =============================================
+       ORDER DETAIL MODAL
+       Shows full order info + items when clicking a row
+  ============================================= -->
+  <div class="modal-overlay" id="orderModal" style="display:none;">
+    <div class="modal-box">
+      <button class="modal-close" id="modalCloseBtn">×</button>
+
+      <h3>Order <span id="modalOrderId"></span></h3>
+
+      <div class="modal-section">
+        <div class="modal-row"><span>Customer</span><span id="modalCustomer"></span></div>
+        <div class="modal-row"><span>Phone</span><span id="modalPhone"></span></div>
+        <div class="modal-row"><span>Zone</span><span id="modalZone"></span></div>
+        <div class="modal-row"><span>Address</span><span id="modalAddress"></span></div>
+        <div class="modal-row"><span>Payment</span><span id="modalPayment"></span></div>
+        <div class="modal-row"><span>Note</span><span id="modalNote"></span></div>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Items list injected by JS -->
+      <div class="modal-items" id="modalItems"></div>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-row modal-total">
+        <span>Total</span><span id="modalTotal"></span>
+      </div>
+
+      <!-- Status update selector -->
+      <div class="modal-status-update">
+        <label for="modalStatusSelect">Update Status</label>
+        <select id="modalStatusSelect">
+          <option value="Pending">Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <button class="btn-primary" id="updateStatusBtn">Update</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+
+</body>
+</html>

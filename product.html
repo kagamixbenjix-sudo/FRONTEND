@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product – SASS BOTTLE</title>
+
+  <!-- Google Fonts: Fraunces (headings) + Jost (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <!-- Product page specific styles -->
+  <link rel="stylesheet" href="css/product.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       AGE VERIFICATION BANNER
+  ============================================= -->
+  <div class="age-banner" id="ageBanner">
+    <p>By browsing this site you confirm you are of <span>legal drinking age</span> in your country of residence. SASS BOTTLE promotes responsible consumption.</p>
+    <div class="age-banner-actions">
+      <button class="btn-age-confirm" id="ageConfirmBtn">I confirm</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       PRODUCT DETAIL SECTION
+       Content injected by product.js after fetching
+       the product from the backend using ?id= in URL
+  ============================================= -->
+  <main class="product-page">
+
+    <!-- Bokeh background -->
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <!-- Back link — returns to the shop page -->
+    <div class="product-back">
+      <a href="shop.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Back to Shop
+      </a>
+    </div>
+
+    <!-- Loading state shown while the product is being fetched -->
+    <div class="product-loading" id="productLoading">
+      Loading product…
+    </div>
+
+    <!-- Error state shown if product is not found -->
+    <div class="product-error" id="productError" style="display:none;">
+      <p>Product not found.</p>
+      <a href="shop.html" class="btn-outline" style="margin-top:20px;">Back to Shop</a>
+    </div>
+
+    <!-- Product content — hidden until data is loaded -->
+    <div class="product-detail" id="productDetail" style="display:none;">
+
+      <!-- LEFT — product image panel -->
+      <div class="product-img-panel">
+        <div class="product-img-box">
+          <!-- Image or emoji placeholder injected by JS -->
+          <div id="productImgWrap"></div>
+        </div>
+        <!-- Category badge below the image -->
+        <div class="product-category-badge" id="productCategory"></div>
+      </div>
+
+      <!-- RIGHT — product information panel -->
+      <div class="product-info-panel">
+
+        <!-- Product name -->
+        <h1 class="product-title" id="productName"></h1>
+
+        <!-- Price — large gold display -->
+        <div class="product-price-display" id="productPrice"></div>
+
+        <!-- Meta details: volume, origin, ABV -->
+        <div class="product-meta" id="productMeta"></div>
+
+        <!-- Description -->
+        <div class="product-description" id="productDescription"></div>
+
+        <!-- Tasting notes (if available) -->
+        <div class="product-tasting" id="productTasting"></div>
+
+        <!-- Divider -->
+        <div class="product-divider"></div>
+
+        <!-- Quantity selector + Add to Cart button -->
+        <div class="product-actions">
+          <div class="qty-wrap">
+            <!-- Decrease quantity -->
+            <button class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">−</button>
+            <!-- Current quantity — starts at 1 -->
+            <span class="qty-value" id="qtyValue">1</span>
+            <!-- Increase quantity -->
+            <button class="qty-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+
+          <!-- Add to Cart button -->
+          <button class="btn-add-cart" id="addToCartBtn">
+            Add to Cart
+          </button>
+        </div>
+
+        <!-- Stock status -->
+        <div class="stock-status" id="stockStatus"></div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =============================================
+       RELATED PRODUCTS SECTION
+       Shows other products from the same category
+  ============================================= -->
+  <section class="related-section" id="relatedSection" style="display:none;">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="section-header">
+      <h2>You May Also Like</h2>
+      <p id="relatedLabel"></p>
+    </div>
+
+    <!-- Related product cards injected by JS -->
+    <div class="products-grid" id="relatedGrid"></div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+      <p>Premium spirits and beverages delivered to your door across Kampala.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256000000000">+256 000 000 000</a></li>
+        <li><a href="contact.html">Kansanga, Kampala</a></li>
+        <li><a href="contact.html">Mon – Sat: 9am – 8pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SASS BOTTLE. All rights reserved.</span>
+      <span>Drink responsibly. 18+</span>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Shared JS loaded first -->
+  <script src="js/global.js"></script>
+  <!-- Product page JS loaded after -->
+  <script src="js/product.js"></script>
+
+</body>
+</html>

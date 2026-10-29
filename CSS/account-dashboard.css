@@ -1,0 +1,186 @@
+/* ==============================================
+   ACCOUNT-DASHBOARD.CSS — Customer dashboard
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css + account.css loaded first
+================================================ */
+
+.dash-page {
+  position: relative;
+  min-height: 80vh;
+  padding: calc(var(--nav-height) + 40px) 40px 80px;
+  overflow: hidden;
+}
+
+.dash-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto 32px;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 36px; height: 1px; background: var(--gold); opacity: 0.6;
+}
+.hero-eyebrow span {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+}
+
+.dash-header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  color: var(--cream);
+}
+.dash-header h1 em { font-style: italic; color: var(--gold); }
+
+/* -----------------------------------------------
+   DASHBOARD CARD — reused for profile + orders
+----------------------------------------------- */
+.dash-card {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto 24px;
+  background: rgba(61, 36, 16, 0.45);
+  border: 1px solid rgba(201, 153, 58, 0.2);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  padding: 28px;
+}
+
+.dash-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 18px;
+}
+
+/* -----------------------------------------------
+   PROFILE GRID
+----------------------------------------------- */
+.profile-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 0.88rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(201, 153, 58, 0.1);
+}
+.profile-row span:first-child { color: var(--gold); opacity: 0.8; font-weight: 600; }
+.profile-row span:last-child { color: var(--cream); text-align: right; }
+
+/* Edit default address */
+.edit-address-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.edit-address-wrap label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.edit-address-row {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-address-row input {
+  flex: 1;
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 8px;
+  color: var(--cream);
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  outline: none;
+}
+.edit-address-row input:focus { border-color: var(--gold); }
+
+.edit-address-row .btn-primary {
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* -----------------------------------------------
+   ORDER HISTORY
+----------------------------------------------- */
+.dash-loading {
+  text-align: center;
+  color: var(--cream);
+  opacity: 0.5;
+  padding: 30px;
+  font-size: 0.85rem;
+}
+
+.dash-order-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(201, 153, 58, 0.1);
+  font-size: 0.85rem;
+}
+.dash-order-row:last-child { border-bottom: none; }
+
+.dash-order-id {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.dash-order-zone { color: var(--cream); opacity: 0.6; }
+.dash-order-total { color: var(--cream); font-weight: 500; }
+.dash-order-date { color: var(--cream); opacity: 0.45; font-size: 0.78rem; }
+
+/* Status badge reused from admin style */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.status-badge.Pending    { background: rgba(235, 183, 87, 0.15); color: #ebb757; }
+.status-badge.Processing { background: rgba(86, 155, 214, 0.15); color: #569bd6; }
+.status-badge.Delivered  { background: rgba(111, 207, 151, 0.15); color: #6fcf97; }
+.status-badge.Cancelled  { background: rgba(235, 87, 87, 0.15); color: #eb5757; }
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 700px) {
+  .dash-page { padding: calc(var(--nav-height) + 20px) 16px 60px; }
+  .dash-card { padding: 20px; }
+
+  .dash-order-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+  }
+  .dash-order-zone { display: none; }
+}

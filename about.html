@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us – SASS BOTTLE</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <!-- About page specific styles -->
+  <link rel="stylesheet" href="css/about.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       AGE VERIFICATION BANNER
+  ============================================= -->
+  <div class="age-banner" id="ageBanner">
+    <p>By browsing this site you confirm you are of <span>legal drinking age</span> in your country of residence.</p>
+    <div class="age-banner-actions">
+      <button class="btn-age-confirm" id="ageConfirmBtn">I confirm</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       ABOUT HERO
+  ============================================= -->
+  <section class="about-hero">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="about-hero-content">
+      <div class="hero-eyebrow">
+        <span>Our Story</span>
+      </div>
+      <h1>More than a <em>Bottle Shop</em></h1>
+      <p>A passion for taste, a love for people, rooted in Kansanga.</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       STORY SECTION
+  ============================================= -->
+  <section class="about-story">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="story-grid">
+
+      <!-- Left: decorative visual panel -->
+      <div class="story-visual">
+        <div class="story-img-frame">
+          <div class="story-img-inner">
+            <!-- Logo as hero visual in the about section -->
+            <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+          </div>
+        </div>
+        <!-- Floating badge -->
+        <div class="story-badge">
+          <span class="badge-year">Est.</span>
+          <span class="badge-name">Kansanga</span>
+          <span class="badge-city">Kampala, UG</span>
+        </div>
+      </div>
+
+      <!-- Right: story text -->
+      <div class="story-text">
+        <h2>The Heart Behind <em>SASS BOTTLE</em></h2>
+
+        <p>
+          SASS BOTTLE was born from a simple idea — that great beverages should be
+          easy to find, beautifully presented, and delivered right to your door.
+          Nestled in the heart of Kansanga, Kampala, our boutique brings together
+          a carefully curated selection of spirits, wines, beers, and non-alcoholic
+          drinks for every occasion.
+        </p>
+
+        <p>
+          We believe that every bottle tells a story — of a celebration, a quiet
+          evening, a gathering of friends. Our mission is to be part of those
+          moments, making premium beverages accessible to everyone in Kampala.
+        </p>
+
+        <p>
+          From imported whiskies and champagnes to local favourites and refreshing
+          sodas, our collection is built with care and love for our community.
+          Whether you're shopping for a special occasion or just stocking up,
+          SASS BOTTLE is here for you.
+        </p>
+
+        <!-- Values row -->
+        <div class="story-values">
+          <div class="value-item">
+            <div class="value-icon">🍾</div>
+            <div class="value-label">Premium Selection</div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🚴</div>
+            <div class="value-label">Fast Delivery</div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">❤️</div>
+            <div class="value-label">Community First</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       WHAT WE OFFER SECTION
+  ============================================= -->
+  <section class="about-offers">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="section-header">
+      <h2>What We Offer</h2>
+      <p>A full range of beverages for every taste and occasion</p>
+    </div>
+
+    <div class="offers-grid">
+      <div class="offer-card">
+        <div class="offer-icon">🥃</div>
+        <h3>Spirits</h3>
+        <p>Whisky, Gin, Vodka, Rum — premium imports and local favourites</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🍾</div>
+        <h3>Champagne & Wine</h3>
+        <p>Sparkling celebrations and fine wines for every occasion</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🍺</div>
+        <h3>Beer & Cider</h3>
+        <p>Cold beers and refreshing ciders, delivered to your door</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">🥤</div>
+        <h3>Non-Alcoholic</h3>
+        <p>Sodas, juices, energy drinks and water for everyone</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA SECTION
+  ============================================= -->
+  <section class="about-cta">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="cta-content">
+      <h2>Ready to <em>Order?</em></h2>
+      <p>Browse our full collection and get your favourites delivered across Kampala.</p>
+      <a href="shop.html" class="btn-pulse">Browse the Shop</a>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+      <p>Premium spirits and beverages delivered to your door across Kampala.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256000000000">+256 000 000 000</a></li>
+        <li><a href="contact.html">Kansanga, Kampala</a></li>
+        <li><a href="contact.html">Mon – Sat: 9am – 8pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SASS BOTTLE. All rights reserved.</span>
+      <span>Drink responsibly. 18+</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+
+</body>
+</html>

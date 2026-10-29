@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales Reports – SASS BOTTLE Admin</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/admin-dashboard.css"/>
+  <link rel="stylesheet" href="css/admin-products.css"/>
+  <link rel="stylesheet" href="css/admin-reports.css"/>
+
+  <!-- Chart.js for the revenue line chart, bar charts, and doughnut chart -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- =============================================
+       ADMIN TOP BAR
+  ============================================= -->
+  <nav class="admin-nav">
+    <div class="admin-nav-left">
+      <img src="assets/logo.svg" alt="SASS BOTTLE" class="admin-logo"/>
+      <span class="admin-title">Admin Dashboard</span>
+    </div>
+    <div class="admin-nav-right">
+      <span class="admin-username" id="adminUsernameDisplay"></span>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Tab navigation -->
+  <div class="admin-tabs">
+    <a href="admin-dashboard.html" class="admin-tab">Orders</a>
+    <a href="admin-products.html" class="admin-tab">Products</a>
+    <a href="admin-reports.html" class="admin-tab active">Reports</a>
+  </div>
+
+  <!-- Ambient animated bokeh background -->
+  <div class="admin-bokeh bokeh-bg" aria-hidden="true">
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+    <div class="bokeh-orb"></div>
+  </div>
+
+  <main class="admin-page">
+
+    <div class="admin-eyebrow"><span>Sales Insights</span></div>
+
+    <!-- =============================================
+         REVENUE CHART — with period toggle
+    ============================================= -->
+    <div class="report-card">
+      <div class="report-card-header">
+        <h2>Revenue Over Time</h2>
+        <!-- Period toggle: 7 or 30 days -->
+        <div class="period-toggle">
+          <button class="period-btn active" data-days="7">7 Days</button>
+          <button class="period-btn" data-days="30">30 Days</button>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TWO-COLUMN: TOP PRODUCTS + CATEGORY BREAKDOWN
+    ============================================= -->
+    <div class="report-grid">
+
+      <div class="report-card">
+        <div class="report-card-header">
+          <h2>Best-Selling Products</h2>
+        </div>
+        <div class="chart-wrap chart-wrap-tall">
+          <canvas id="topProductsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="report-card-header">
+          <h2>Revenue by Category</h2>
+        </div>
+        <div class="chart-wrap chart-wrap-tall">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =============================================
+         ORDER STATUS BREAKDOWN
+    ============================================= -->
+    <div class="report-card">
+      <div class="report-card-header">
+        <h2>Order Status Breakdown</h2>
+      </div>
+      <div class="status-breakdown-wrap">
+        <div class="chart-wrap chart-wrap-small">
+          <canvas id="statusChart"></canvas>
+        </div>
+        <!-- Legend with counts, built by JS -->
+        <div class="status-legend" id="statusLegend"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+  <script src="js/admin-reports.js"></script>
+
+</body>
+</html>

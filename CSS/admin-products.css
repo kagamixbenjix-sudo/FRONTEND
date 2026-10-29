@@ -1,0 +1,340 @@
+/* ==============================================
+   ADMIN-PRODUCTS.CSS — Product management page
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css + admin-dashboard.css loaded first
+================================================ */
+
+/* -----------------------------------------------
+   TAB NAVIGATION — Orders / Products
+----------------------------------------------- */
+.admin-tabs {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  padding: 18px 32px 0;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.admin-tab {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  opacity: 0.55;
+  padding: 10px 20px;
+  border-radius: 10px 10px 0 0;
+  transition: opacity var(--transition), background var(--transition), color var(--transition);
+}
+
+.admin-tab:hover { opacity: 0.85; }
+
+.admin-tab.active {
+  opacity: 1;
+  color: var(--gold);
+  background: rgba(201, 153, 58, 0.1);
+  border-bottom: 2px solid var(--gold);
+}
+
+/* -----------------------------------------------
+   SEARCH BOX — filters products by name
+----------------------------------------------- */
+.admin-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: var(--gold);
+  opacity: 0.85;
+  transition: border-color var(--transition);
+}
+.admin-search-wrap:focus-within {
+  border-color: var(--gold);
+  opacity: 1;
+}
+
+.admin-search-wrap input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  width: 160px;
+}
+.admin-search-wrap input::placeholder { color: var(--cream); opacity: 0.4; }
+
+/* -----------------------------------------------
+   SORT DROPDOWN
+----------------------------------------------- */
+.admin-sort-select {
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 20px;
+  color: var(--cream);
+  padding: 9px 16px;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+.admin-sort-select:hover,
+.admin-sort-select:focus { border-color: var(--gold); }
+.admin-sort-select option { background: var(--chocolate-mid); }
+
+/* -----------------------------------------------
+   AVAILABILITY BADGE IN TABLE
+----------------------------------------------- */
+.avail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 16px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.avail-badge.in    { background: rgba(111, 207, 151, 0.12); color: #6fcf97; }
+.avail-badge.out   { background: rgba(235, 87, 87, 0.12); color: #eb5757; }
+
+/* Quick toggle button inside the table row */
+.btn-toggle-stock {
+  background: transparent;
+  border: 1px solid rgba(201, 153, 58, 0.3);
+  color: var(--cream);
+  opacity: 0.7;
+  padding: 5px 14px;
+  border-radius: 14px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: opacity var(--transition), border-color var(--transition);
+}
+.btn-toggle-stock:hover { opacity: 1; border-color: var(--gold); }
+
+/* Edit icon button */
+.btn-edit-row {
+  background: rgba(201, 153, 58, 0.1);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  color: var(--gold);
+  padding: 6px 16px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.btn-edit-row:hover { background: rgba(201, 153, 58, 0.2); }
+
+/* -----------------------------------------------
+   PRODUCT FORM (inside modal)
+----------------------------------------------- */
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.product-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.product-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.product-form label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.product-form input,
+.product-form select {
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px solid rgba(201, 153, 58, 0.25);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.product-form input::placeholder { opacity: 0.35; }
+.product-form input:focus,
+.product-form select:focus { border-color: var(--gold); }
+.product-form select option { background: var(--chocolate-mid); }
+
+/* -----------------------------------------------
+   TOGGLE SWITCH — In Stock / Out of Stock
+----------------------------------------------- */
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: rgba(235, 87, 87, 0.3);
+  border-radius: 26px;
+  transition: background var(--transition);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 3px; bottom: 3px;
+  background: var(--cream);
+  border-radius: 50%;
+  transition: transform var(--transition);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: #6fcf97;
+}
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+#prodInStockLabel {
+  font-size: 0.85rem;
+  color: var(--cream);
+  font-weight: 500;
+}
+
+/* -----------------------------------------------
+   PRODUCT PHOTO UPLOAD + PREVIEW
+----------------------------------------------- */
+
+/* Style the native file input to match the site's theme */
+.product-form input[type="file"] {
+  background: rgba(44, 26, 14, 0.6);
+  border: 1px dashed rgba(201, 153, 58, 0.35);
+  border-radius: 8px;
+  color: var(--cream);
+  font-size: 0.82rem;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+/* Style the browser's built-in "Choose file" button */
+.product-form input[type="file"]::file-selector-button {
+  background: var(--gold);
+  color: var(--chocolate);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background var(--transition);
+}
+.product-form input[type="file"]::file-selector-button:hover {
+  background: var(--gold-light);
+}
+
+/* Preview box for the selected or existing product photo */
+.image-preview-wrap {
+  margin-top: 10px;
+  width: 120px;
+  height: 120px;
+  background: rgba(245, 237, 216, 0.06);
+  border: 1px solid rgba(201, 153, 58, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+/* Small thumbnail shown in the products table */
+.table-thumb {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: rgba(245, 237, 216, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 1.1rem;
+}
+.table-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* -----------------------------------------------
+   DELETE BUTTON IN MODAL
+----------------------------------------------- */
+.btn-delete-product {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(235, 87, 87, 0.3);
+  color: #eb5757;
+  padding: 12px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: background var(--transition);
+}
+.btn-delete-product:hover { background: rgba(235, 87, 87, 0.1); }
+
+/* Form error message */
+.form-error {
+  background: rgba(235, 87, 87, 0.08);
+  border: 1px solid rgba(235, 87, 87, 0.25);
+  color: #eb5757;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* -----------------------------------------------
+   RESPONSIVE
+----------------------------------------------- */
+@media (max-width: 768px) {
+  .admin-tabs { padding: 14px 16px 0; }
+  .product-form .form-row { grid-template-columns: 1fr; }
+}
