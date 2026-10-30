@@ -1,0 +1,173 @@
+/* =============================================
+   GALLERY.CSS — Gallery page styles
+   SASS BOTTLE | Closet & Taste
+   Requires: global.css loaded first
+============================================= */
+
+/* -------------------------------------------
+   GALLERY HERO
+------------------------------------------- */
+.gallery-hero {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: calc(var(--nav-height) + 60px) 40px 60px;
+  overflow: hidden;
+  background: var(--chocolate-dark);
+}
+
+.gallery-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+
+.gallery-hero-content h1 {
+  margin: 8px 0 16px;
+}
+
+.gallery-hero-content p {
+  color: var(--cream-dim, rgba(245,235,220,0.75));
+}
+
+/* -------------------------------------------
+   GALLERY GRID (bento layout)
+------------------------------------------- */
+.gallery-main {
+  position: relative;
+  padding: 60px 40px 100px;
+  background: var(--chocolate-dark);
+  overflow: hidden;
+}
+
+.gallery-grid {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 220px;
+  gap: 20px;
+}
+
+.gallery-item-lg {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 110, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 110, 0.6);
+}
+
+.gallery-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5rem;
+  opacity: 0.9;
+}
+
+.gallery-item-lg .gallery-visual {
+  font-size: 7rem;
+}
+
+/* Each category gets a subtle tinted gradient backdrop */
+.gallery-wine       { background: radial-gradient(circle at 30% 20%, rgba(122, 28, 44, 0.45), transparent 70%); }
+.gallery-whisky      { background: radial-gradient(circle at 70% 30%, rgba(212, 175, 110, 0.3), transparent 70%); }
+.gallery-gin         { background: radial-gradient(circle at 50% 50%, rgba(80, 140, 120, 0.3), transparent 70%); }
+.gallery-champagne   { background: radial-gradient(circle at 40% 40%, rgba(212, 175, 110, 0.35), transparent 70%); }
+.gallery-beer        { background: radial-gradient(circle at 60% 30%, rgba(190, 140, 50, 0.3), transparent 70%); }
+.gallery-soda        { background: radial-gradient(circle at 30% 60%, rgba(150, 60, 60, 0.3), transparent 70%); }
+.gallery-delivery    { background: radial-gradient(circle at 50% 50%, rgba(90, 90, 90, 0.3), transparent 70%); }
+.gallery-gift        { background: radial-gradient(circle at 40% 30%, rgba(170, 90, 140, 0.3), transparent 70%); }
+
+.gallery-caption {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(26, 18, 11, 0.9) 85%);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.gallery-caption h3 {
+  font-family: var(--font-heading, 'Fraunces', serif);
+  color: var(--gold, #d4af6e);
+  font-size: 1.1rem;
+  margin: 0 0 4px;
+}
+
+.gallery-caption p {
+  color: var(--cream-dim, rgba(245,235,220,0.75));
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* -------------------------------------------
+   CTA SECTION (reuses about/contact patterns)
+------------------------------------------- */
+.gallery-cta {
+  position: relative;
+  padding: 80px 40px;
+  text-align: center;
+  background: var(--chocolate-dark);
+  overflow: hidden;
+}
+
+.gallery-cta .cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.gallery-cta .cta-content p {
+  color: var(--cream-dim, rgba(245,235,220,0.75));
+  margin: 12px 0 28px;
+}
+
+/* -------------------------------------------
+   RESPONSIVE
+------------------------------------------- */
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 180px;
+  }
+  .gallery-item-lg {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery-hero { padding: calc(var(--nav-height) + 40px) 24px 40px; }
+  .gallery-main { padding: 40px 20px 70px; }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+  .gallery-item-lg { grid-column: span 1; }
+}

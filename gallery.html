@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery – SASS BOTTLE</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <!-- Gallery page specific styles -->
+  <link rel="stylesheet" href="css/gallery.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       STICKY NAVIGATION
+  ============================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" alt="SASS BOTTLE – Closet & Taste"/>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="cart.html" class="nav-cart" aria-label="View cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       AGE VERIFICATION BANNER
+  ============================================= -->
+  <div class="age-banner" id="ageBanner">
+    <p>By browsing this site you confirm you are of <span>legal drinking age</span> in your country of residence.</p>
+    <div class="age-banner-actions">
+      <button class="btn-age-confirm" id="ageConfirmBtn">I confirm</button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       GALLERY HERO
+  ============================================= -->
+  <section class="gallery-hero">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+    <div class="gallery-hero-content">
+      <div class="hero-eyebrow"><span>The Collection</span></div>
+      <h1>A Glimpse Into <em>Our World</em></h1>
+      <p>Moments, bottles, and the spirit of SASS BOTTLE</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       GALLERY GRID
+  ============================================= -->
+  <section class="gallery-main">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="gallery-item gallery-item-lg">
+        <div class="gallery-visual gallery-wine" aria-hidden="true">🍷</div>
+        <div class="gallery-caption">
+          <h3>Fine Wines</h3>
+          <p>Reds, whites & sparkling for every table</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-whisky" aria-hidden="true">🥃</div>
+        <div class="gallery-caption">
+          <h3>Whisky Shelf</h3>
+          <p>Smooth pours, well aged</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-gin" aria-hidden="true">🍸</div>
+        <div class="gallery-caption">
+          <h3>Gin & Botanicals</h3>
+          <p>Crisp, bright, and bold</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-champagne" aria-hidden="true">🍾</div>
+        <div class="gallery-caption">
+          <h3>Celebration Pops</h3>
+          <p>Champagne for big moments</p>
+        </div>
+      </div>
+
+      <div class="gallery-item gallery-item-lg">
+        <div class="gallery-visual gallery-beer" aria-hidden="true">🍺</div>
+        <div class="gallery-caption">
+          <h3>Chilled & Ready</h3>
+          <p>Cold beers, straight from the fridge</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-soda" aria-hidden="true">🥤</div>
+        <div class="gallery-caption">
+          <h3>Soft Drinks</h3>
+          <p>Something for everyone</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-delivery" aria-hidden="true">🛵</div>
+        <div class="gallery-caption">
+          <h3>Fast Delivery</h3>
+          <p>Across Kampala, on time</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-visual gallery-gift" aria-hidden="true">🎁</div>
+        <div class="gallery-caption">
+          <h3>Gifts Worth Giving</h3>
+          <p>Beautifully packaged orders</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA SECTION
+  ============================================= -->
+  <section class="gallery-cta">
+    <div class="bokeh-bg" aria-hidden="true">
+      <div class="bokeh-orb"></div>
+      <div class="bokeh-orb"></div>
+    </div>
+    <div class="cta-content">
+      <h2>Like What You <em>See?</em></h2>
+      <p>Explore the full collection and find your next favourite bottle.</p>
+      <a href="shop.html" class="btn-pulse">Browse the Shop</a>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="SASS BOTTLE"/>
+      <p>Premium spirits and beverages delivered to your door across Kampala.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+256000000000">+256 000 000 000</a></li>
+        <li><a href="contact.html">Kansanga, Kampala</a></li>
+        <li><a href="contact.html">Mon – Sat: 9am – 8pm</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SASS BOTTLE. All rights reserved.</span>
+      <span>Drink responsibly. 18+</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="js/global.js"></script>
+
+</body>
+</html>
