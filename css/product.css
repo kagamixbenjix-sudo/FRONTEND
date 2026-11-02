@@ -95,6 +95,7 @@
   /* Breathing room around the photo — replaces the old 70%-of-box
      sizing trick on the image, which was unreliable */
   padding: 50px;
+  #productImgWrap { width: 100%; height: 100%; }
 }
 
 .product-img-box img {

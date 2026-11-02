@@ -138,3 +138,4 @@
   font-weight: 600;
 }
 .guest-note a:hover { opacity: 0.8; }
+.admin-access { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(212, 175, 110, 0.15); text-align: center; } .admin-access-link { display: inline-block; font-size: 0.82rem; color: rgba(212, 175, 110, 0.55); text-decoration: none; padding: 6px 14px; border: 1px solid rgba(212, 175, 110, 0.25); border-radius: 20px; transition: all 0.25s ease; } .admin-access-link:hover { color: var(--gold, #d4af6e); border-color: var(--gold, #d4af6e); background: rgba(212, 175, 110, 0.08); }
