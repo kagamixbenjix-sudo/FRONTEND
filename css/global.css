@@ -588,3 +588,22 @@ footer {
   .btn-buy::after,
   .btn-pulse { animation: none; }
 }
+.badge-low-stock {
+  background: #b8762c;
+  color: #fff;
+}
+
+.badge-out-of-stock {
+  background: #7a2e2e;
+  color: #fff;
+}
+
+.btn-buy-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.stock-status.low-stock {
+  color: #d9a441;
+}

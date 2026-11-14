@@ -9,6 +9,10 @@
 ----------------------------------------------- */
 const API_BASE = 'https://backend-zvo3.onrender.com';
 
+/* Below this many units left (quantity-tracked products only),
+   show an "Only X left" badge instead of the category badge */
+const LOW_STOCK_THRESHOLD = 5;
+
 /* -----------------------------------------------
    AGE VERIFICATION BANNER
    Shows on first visit only — stored in localStorage
@@ -154,12 +158,27 @@ function buildProductCard(product) {
     ? `<img src="${resolveImageUrl(product.image_url)}" alt="${product.name}" loading="lazy"/>`
     : `<div class="product-img-placeholder">🍾</div>`;
 
+  const isOutOfStock = product.in_stock === false;
+  const isLowStock    = !isOutOfStock
+    && product.stock_mode === 'quantity'
+    && product.stock_quantity != null
+    && product.stock_quantity <= LOW_STOCK_THRESHOLD;
+
+  // Top-left badge: out of stock takes priority, then low stock,
+  // then the normal category badge
+  let topBadgeHtml = '';
+  if (isOutOfStock) {
+    topBadgeHtml = `<span class="product-badge badge-out-of-stock">Out of Stock</span>`;
+  } else if (isLowStock) {
+    topBadgeHtml = `<span class="product-badge badge-low-stock">Only ${product.stock_quantity} left</span>`;
+  } else if (product.category_name) {
+    topBadgeHtml = `<span class="product-badge">${product.category_name}</span>`;
+  }
+
   card.innerHTML = `
     <div class="product-img-wrap">
       ${imgHtml}
-      ${product.category_name
-        ? `<span class="product-badge">${product.category_name}</span>`
-        : ''}
+      ${topBadgeHtml}
     </div>
     <div class="product-info">
       <div class="product-name">${product.name}</div>
@@ -168,7 +187,9 @@ function buildProductCard(product) {
         : ''}
       <div class="product-footer">
         <div class="product-price">${formatPrice(product.price)}</div>
-        <button class="btn-buy" data-id="${product.id}">Buy Now</button>
+        <button class="btn-buy${isOutOfStock ? ' btn-buy-disabled' : ''}" data-id="${product.id}"${isOutOfStock ? ' disabled' : ''}>
+          ${isOutOfStock ? 'Out of Stock' : 'Buy Now'}
+        </button>
       </div>
     </div>
   `;
@@ -180,16 +201,20 @@ function buildProductCard(product) {
     }
   });
 
-  // Clicking "Buy Now" adds the item to the cart
-  card.querySelector('.btn-buy').addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent card click from firing too
-    addToCart({
-      id:        product.id,
-      name:      product.name,
-      price:     product.price,
-      image_url: product.image_url || null
+  // Clicking "Buy Now" adds the item to the cart — skipped entirely
+  // when the product is out of stock (button is disabled anyway,
+  // this just guards against any edge case)
+  if (!isOutOfStock) {
+    card.querySelector('.btn-buy').addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent card click from firing too
+      addToCart({
+        id:        product.id,
+        name:      product.name,
+        price:     product.price,
+        image_url: product.image_url || null
+      });
     });
-  });
+  }
 
   return card;
 }

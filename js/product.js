@@ -105,17 +105,28 @@ function renderProduct(product) {
   const addBtn    = document.getElementById('addToCartBtn');
   const stockEl   = document.getElementById('stockStatus');
 
+  const isLowStock = product.in_stock !== false
+    && product.stock_mode === 'quantity'
+    && product.stock_quantity != null
+    && product.stock_quantity <= LOW_STOCK_THRESHOLD;
+
   if (product.in_stock === false) {
     // Product is out of stock
     addBtn.disabled      = true;
     addBtn.textContent   = 'Out of Stock';
     stockEl.className    = 'stock-status out-stock';
     stockEl.textContent  = '✕ Currently unavailable';
+  } else if (isLowStock) {
+    // Available, but running low — still purchasable
+    stockEl.className   = 'stock-status low-stock';
+    stockEl.textContent = `⚠ Only ${product.stock_quantity} left in stock`;
   } else {
     // Product is available — wire up the Add to Cart button
     stockEl.className   = 'stock-status in-stock';
     stockEl.textContent = '✓ In stock';
+  }
 
+  if (product.in_stock !== false) {
     addBtn.addEventListener('click', () => {
       // Add the product to cart with the selected quantity
       const cart     = JSON.parse(localStorage.getItem('sassBottleCart') || '[]');
