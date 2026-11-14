@@ -151,15 +151,32 @@
           </div>
         </div>
 
-        <!-- Availability toggle -->
+        <!-- Stock tracking mode -->
         <div class="form-group">
-          <label>Availability</label>
-          <div class="toggle-wrap">
+          <label>Stock Tracking</label>
+          <div class="stock-mode-wrap" style="display:flex; gap:18px; margin-bottom:10px;">
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+              <input type="radio" name="stockMode" id="stockModeSimple" value="simple" checked/>
+              Simple
+            </label>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+              <input type="radio" name="stockMode" id="stockModeQuantity" value="quantity"/>
+              By quantity
+            </label>
+          </div>
+
+          <!-- Simple mode -->
+          <div class="toggle-wrap" id="simpleStockWrap">
             <label class="toggle-switch">
               <input type="checkbox" id="prodInStock" checked/>
               <span class="toggle-slider"></span>
             </label>
             <span id="prodInStockLabel">In Stock</span>
+          </div>
+
+          <!-- Quantity mode -->
+          <div class="form-group" id="quantityStockWrap" style="display:none; margin-top:8px;">
+            <input type="number" id="prodStockQuantity" placeholder="e.g. 24" min="0"/>
           </div>
         </div>
 

@@ -86,10 +86,78 @@ async function loadCategories() {
       select.appendChild(opt);
     });
 
+    const newCatOpt = document.createElement('option');
+    newCatOpt.value = '__new__';
+    newCatOpt.textContent = '+ Add new category…';
+    select.appendChild(newCatOpt);
+
   } catch (err) {
     console.error('Could not load categories:', err);
   }
 }
+
+/* -----------------------------------------------
+   HANDLE "+ ADD NEW CATEGORY…" SELECTION
+----------------------------------------------- */
+document.getElementById('prodCategory').addEventListener('change', async function () {
+  if (this.value !== '__new__') return;
+
+  const name = prompt('New category name:');
+
+  if (!name || !name.trim()) {
+    this.value = '';
+    return;
+  }
+
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/categories`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name: name.trim() })
+    });
+
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error);
+
+    allCategories.push(result.data);
+
+    const opt = document.createElement('option');
+    opt.value = result.data.id;
+    opt.textContent = result.data.name;
+    this.insertBefore(opt, this.lastElementChild);
+    this.value = result.data.id;
+
+    const chipsContainer = document.getElementById('categoryFilters');
+    const btn = document.createElement('button');
+    btn.className = 'status-chip';
+    btn.textContent = result.data.name;
+    btn.dataset.category = result.data.name;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#categoryFilters .status-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = result.data.name;
+      renderProductsTable();
+    });
+    chipsContainer.appendChild(btn);
+
+    showToast(result.alreadyExisted ? 'Category already existed — selected it.' : 'Category added!');
+
+  } catch (err) {
+    showToast('Could not add category: ' + err.message);
+    this.value = '';
+  }
+});
+
+/* -----------------------------------------------
+   TOGGLE BETWEEN "SIMPLE" AND "BY QUANTITY" STOCK MODE
+----------------------------------------------- */
+document.querySelectorAll('input[name="stockMode"]').forEach(radio => {
+  radio.addEventListener('change', function () {
+    const isQuantity = this.value === 'quantity';
+    document.getElementById('simpleStockWrap').style.display   = isQuantity ? 'none' : 'flex';
+    document.getElementById('quantityStockWrap').style.display = isQuantity ? 'block' : 'none';
+  });
+});
 
 // "All" chip listener
 document.querySelector('#categoryFilters .status-chip[data-category=""]').addEventListener('click', function () {
@@ -172,14 +240,25 @@ function renderProductsTable() {
   filtered.forEach(product => {
     const row = document.createElement('tr');
 
+    // stock_mode is the explicit source of truth — 'quantity' or 'simple'
+    const usesQuantity = product.stock_mode === 'quantity';
+
     const availBadge = product.in_stock
-      ? '<span class="avail-badge in">✓ In Stock</span>'
+      ? `<span class="avail-badge in">✓ In Stock${usesQuantity ? ` (${product.stock_quantity})` : ''}</span>`
       : '<span class="avail-badge out">✕ Out of Stock</span>';
 
     // Thumbnail — shows the photo if one was uploaded, else a bottle emoji
     const thumbHtml = product.image_url
       ? `<img src="${resolveImageUrl(product.image_url)}" alt="${product.name}"/>`
       : '🍾';
+
+    // The quick toggle button only makes sense for "simple" mode products —
+    // for "quantity" mode, stock is updated via Edit instead
+    const quickToggleBtn = usesQuantity
+      ? ''
+      : `<button class="btn-toggle-stock" data-id="${product.id}" data-current="${product.in_stock}">
+           ${product.in_stock ? 'Mark Out' : 'Mark In'}
+         </button>`;
 
     row.innerHTML = `
       <td><div class="table-thumb">${thumbHtml}</div></td>
@@ -188,9 +267,7 @@ function renderProductsTable() {
       <td>${formatPrice(product.price)}</td>
       <td>${availBadge}</td>
       <td>
-        <button class="btn-toggle-stock" data-id="${product.id}" data-current="${product.in_stock}">
-          ${product.in_stock ? 'Mark Out' : 'Mark In'}
-        </button>
+        ${quickToggleBtn}
         <button class="btn-edit-row" data-id="${product.id}">Edit</button>
       </td>
     `;
@@ -242,8 +319,15 @@ document.getElementById('addProductBtn').addEventListener('click', () => {
   editingProductId = null;
   document.getElementById('productModalTitle').textContent = 'Add Product';
   document.getElementById('productForm').reset();
+
   document.getElementById('prodInStock').checked = true;
   document.getElementById('prodInStockLabel').textContent = 'In Stock';
+
+  document.getElementById('stockModeSimple').checked = true;
+  document.getElementById('simpleStockWrap').style.display   = 'flex';
+  document.getElementById('quantityStockWrap').style.display = 'none';
+  document.getElementById('prodStockQuantity').value = '';
+
   document.getElementById('deleteProductBtn').style.display = 'none';
   document.getElementById('productFormError').style.display = 'none';
 
@@ -285,8 +369,18 @@ function openEditModal(productId) {
   document.getElementById('prodCategory').value = product.category_id;
   document.getElementById('prodPrice').value    = product.price;
   document.getElementById('prodVolume').value   = product.volume_ml || '';
+
+  // stock_mode is the explicit source of truth — 'quantity' or 'simple'
+  const usesQuantity = product.stock_mode === 'quantity';
+
+  document.getElementById('stockModeSimple').checked   = !usesQuantity;
+  document.getElementById('stockModeQuantity').checked = usesQuantity;
+  document.getElementById('simpleStockWrap').style.display   = usesQuantity ? 'none' : 'flex';
+  document.getElementById('quantityStockWrap').style.display = usesQuantity ? 'block' : 'none';
+
   document.getElementById('prodInStock').checked = product.in_stock;
   document.getElementById('prodInStockLabel').textContent = product.in_stock ? 'In Stock' : 'Out of Stock';
+  document.getElementById('prodStockQuantity').value = usesQuantity ? product.stock_quantity : '';
 
   document.getElementById('deleteProductBtn').style.display = 'block';
   document.getElementById('productFormError').style.display = 'none';
@@ -333,20 +427,32 @@ document.getElementById('productForm').addEventListener('submit', async function
   const btn     = document.getElementById('productSaveBtn');
   errorEl.style.display = 'none';
 
-  // Use FormData instead of JSON so the photo file can be sent along
-  // with the other fields in a single request
+  const categoryValue = document.getElementById('prodCategory').value;
+  if (!categoryValue || categoryValue === '__new__') {
+    errorEl.textContent   = 'Please choose a category.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const stockMode = document.querySelector('input[name="stockMode"]:checked').value;
+
   const formData = new FormData();
   formData.append('name', document.getElementById('prodName').value.trim());
-  formData.append('category_id', document.getElementById('prodCategory').value);
+  formData.append('category_id', categoryValue);
   formData.append('price', document.getElementById('prodPrice').value);
 
   if (document.getElementById('prodVolume').value) {
     formData.append('volume_ml', document.getElementById('prodVolume').value);
   }
 
-  formData.append('in_stock', document.getElementById('prodInStock').checked);
+  formData.append('stock_mode', stockMode);
 
-  // Only attach a photo if the admin actually selected one
+  if (stockMode === 'quantity') {
+    formData.append('stock_quantity', document.getElementById('prodStockQuantity').value || '0');
+  } else {
+    formData.append('in_stock', document.getElementById('prodInStock').checked);
+  }
+
   const photoFile = document.getElementById('prodImage').files[0];
   if (photoFile) {
     formData.append('image', photoFile);
