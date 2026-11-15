@@ -202,6 +202,14 @@ async function loadDeliveryZones() {
 
     const select = document.getElementById('deliveryZone');
 
+    // Remove any zone options added by a previous call — keeps only
+    // the first "— Select your zone —" placeholder option. Without
+    // this, calling loadDeliveryZones() more than once (e.g. if the
+    // script runs twice) stacks duplicate zones in the dropdown.
+    while (select.options.length > 1) {
+      select.remove(1);
+    }
+
     // Add one option per zone
     deliveryZones.forEach(zone => {
       const opt = document.createElement('option');

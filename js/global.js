@@ -148,6 +148,11 @@ function resolveImageUrl(url) {
    BUILD PRODUCT CARD
    Creates a card element from a product object.
    Used on the homepage and the shop page.
+
+   Two badges can appear on the image, independently:
+   - category badge, top-left (unchanged from before)
+   - stock alert badge, top-right, red, only shown when
+     the product is low on stock or out of stock
 ----------------------------------------------- */
 function buildProductCard(product) {
   const card = document.createElement('div');
@@ -164,21 +169,24 @@ function buildProductCard(product) {
     && product.stock_quantity != null
     && product.stock_quantity <= LOW_STOCK_THRESHOLD;
 
-  // Top-left badge: out of stock takes priority, then low stock,
-  // then the normal category badge
-  let topBadgeHtml = '';
+  // Category badge — top-left, always the normal gold badge, unchanged
+  const categoryBadgeHtml = product.category_name
+    ? `<span class="product-badge">${product.category_name}</span>`
+    : '';
+
+  // Stock alert badge — top-right, red, only when relevant
+  let alertBadgeHtml = '';
   if (isOutOfStock) {
-    topBadgeHtml = `<span class="product-badge badge-out-of-stock">Out of Stock</span>`;
+    alertBadgeHtml = `<span class="product-badge-alert out">Out of Stock</span>`;
   } else if (isLowStock) {
-    topBadgeHtml = `<span class="product-badge badge-low-stock">Only ${product.stock_quantity} left</span>`;
-  } else if (product.category_name) {
-    topBadgeHtml = `<span class="product-badge">${product.category_name}</span>`;
+    alertBadgeHtml = `<span class="product-badge-alert low">Only ${product.stock_quantity} left</span>`;
   }
 
   card.innerHTML = `
     <div class="product-img-wrap">
       ${imgHtml}
-      ${topBadgeHtml}
+      ${categoryBadgeHtml}
+      ${alertBadgeHtml}
     </div>
     <div class="product-info">
       <div class="product-name">${product.name}</div>
