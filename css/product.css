@@ -95,7 +95,11 @@
   /* Breathing room around the photo — replaces the old 70%-of-box
      sizing trick on the image, which was unreliable */
   padding: 50px;
-  #productImgWrap { width: 100%; height: 100%; }
+}
+
+#productImgWrap {
+  width: 100%;
+  height: 100%;
 }
 
 .product-img-box img {
@@ -333,6 +337,13 @@
 }
 
 .related-section .products-grid {
+  /* shop.css (which normally defines .products-grid as a grid) is
+     never loaded on the product page — these rules are duplicated
+     here so "You May Also Like" lays out the same way as the shop
+     page instead of stacking vertically */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
   max-width: 1100px;
   margin: 0 auto;
   position: relative;
