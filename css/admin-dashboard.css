@@ -481,6 +481,126 @@ body {
 .modal-status-update select option { background: var(--chocolate-mid); }
 
 /* -----------------------------------------------
+   NEW IN-STORE SALE — "add item" card
+   A visually distinct little builder row, so it
+   reads as a tool rather than a plain form field.
+----------------------------------------------- */
+.instore-add-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(201, 153, 58, 0.05);
+  border: 1px solid rgba(201, 153, 58, 0.18);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.instore-add-row .form-group { margin: 0; width: 100%; }
+.instore-add-row .form-group select { width: 100%; }
+
+/* Qty stepper + Add button share the second row, side by side */
+.instore-qty-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.instore-qty-row .btn-primary {
+  flex: 1;
+}
+
+/* Quantity stepper — same spirit as the public product page's
+   qty selector, restyled slightly smaller for the admin modal */
+.instore-qty-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(201, 153, 58, 0.35);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(44, 26, 14, 0.6);
+  height: 42px;
+}
+
+.instore-qty-btn {
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  font-size: 1.1rem;
+  width: 36px;
+  height: 100%;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.instore-qty-btn:hover { background: rgba(201, 153, 58, 0.18); color: var(--gold); }
+
+.instore-qty-value {
+  min-width: 34px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cream);
+  border-left: 1px solid rgba(201, 153, 58, 0.2);
+  border-right: 1px solid rgba(201, 153, 58, 0.2);
+  padding: 0 2px;
+}
+
+/* -----------------------------------------------
+   NEW IN-STORE SALE — item list
+   Each line gets a bottle glyph and a subtle hover,
+   like a little receipt rather than plain rows.
+----------------------------------------------- */
+#inStoreItems .modal-item-row {
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background var(--transition);
+}
+#inStoreItems .modal-item-row:hover {
+  background: rgba(201, 153, 58, 0.07);
+}
+
+.instore-item-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.instore-item-name .instore-bottle-icon {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.btn-remove-in-store-item {
+  background: none;
+  border: none;
+  color: #eb5757;
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+.btn-remove-in-store-item:hover { opacity: 1; }
+
+.instore-empty-state {
+  text-align: center;
+  opacity: 0.5;
+  font-size: 0.85rem;
+  padding: 10px 0;
+}
+
+/* -----------------------------------------------
+   NEW IN-STORE SALE — total emphasis
+   Slightly larger and glowing, so it's the clear
+   focal point right before confirming the sale.
+----------------------------------------------- */
+#inStoreTotal {
+  font-size: 1.5rem;
+  text-shadow: 0 0 18px rgba(201, 153, 58, 0.45);
+}
+
+/* -----------------------------------------------
    RESPONSIVE
 ----------------------------------------------- */
 @media (max-width: 768px) {
@@ -490,4 +610,6 @@ body {
   .admin-username { display: none; }
   .orders-section { padding: 18px; }
   .stat-card { padding: 18px 20px; }
+
+  .instore-add-row { flex-direction: column; align-items: stretch; }
 }

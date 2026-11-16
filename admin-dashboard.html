@@ -89,13 +89,21 @@
       <div class="orders-header">
         <h2>Orders</h2>
 
-        <!-- Status filter chips -->
-        <div class="status-filters" id="statusFilters">
-          <button class="status-chip active" data-status="">All</button>
-          <button class="status-chip" data-status="Pending">Pending</button>
-          <button class="status-chip" data-status="Processing">Processing</button>
-          <button class="status-chip" data-status="Delivered">Delivered</button>
-          <button class="status-chip" data-status="Cancelled">Cancelled</button>
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+
+          <!-- Status filter chips -->
+          <div class="status-filters" id="statusFilters">
+            <button class="status-chip active" data-status="">All</button>
+            <button class="status-chip" data-status="Pending">Pending</button>
+            <button class="status-chip" data-status="Processing">Processing</button>
+            <button class="status-chip" data-status="Delivered">Delivered</button>
+            <button class="status-chip" data-status="Cancelled">Cancelled</button>
+          </div>
+
+          <!-- Record a walk-in sale made at the shop -->
+          <button class="btn-primary" id="newInStoreSaleBtn" style="padding:10px 22px; font-size:0.78rem;">
+            + New In-Store Sale
+          </button>
         </div>
       </div>
 
@@ -165,6 +173,81 @@
         </select>
         <button class="btn-primary" id="updateStatusBtn">Update</button>
       </div>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       NEW IN-STORE SALE MODAL
+       Lets the admin record a walk-in purchase made
+       directly at the shop — builds a small cart of
+       products + quantities, then submits it as one order.
+  ============================================= -->
+  <div class="modal-overlay" id="inStoreModal" style="display:none;">
+    <div class="modal-box">
+      <button class="modal-close" id="inStoreModalCloseBtn">×</button>
+
+      <h3>New In-Store Sale</h3>
+
+      <div class="product-form">
+
+        <div class="form-group">
+          <label for="inStoreCustomerName">Customer name (optional)</label>
+          <input type="text" id="inStoreCustomerName" placeholder="Walk-in Customer"/>
+        </div>
+
+        <div class="modal-divider" style="margin:4px 0;"></div>
+
+        <!-- Add-item row: product picker (full width), then
+             quantity stepper + Add button side by side below -->
+        <div class="instore-add-row">
+          <div class="form-group">
+            <label for="inStoreProductSelect">Product</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <!-- Live thumbnail of the currently selected product,
+                   so the admin can visually confirm the right item
+                   before adding it — reuses the same .table-thumb
+                   style as the Products table -->
+              <div class="table-thumb" id="inStoreProductPreview" style="flex-shrink:0; width:44px; height:44px;">🍾</div>
+              <select id="inStoreProductSelect" style="flex:1;">
+                <!-- Options loaded dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <div class="instore-qty-row">
+            <div class="instore-qty-wrap">
+              <button type="button" class="instore-qty-btn" id="inStoreQtyMinus" aria-label="Decrease quantity">−</button>
+              <span class="instore-qty-value" id="inStoreQtyValue">1</span>
+              <button type="button" class="instore-qty-btn" id="inStoreQtyPlus" aria-label="Increase quantity">+</button>
+            </div>
+
+            <button type="button" class="btn-primary" id="inStoreAddItemBtn" style="height:42px; font-size:0.78rem;">
+              + Add
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Running list of items added to this sale -->
+      <div class="modal-items" id="inStoreItems">
+        <p class="instore-empty-state">🍾 No items added yet — start by picking a product above.</p>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-row modal-total">
+        <span>Total</span><span id="inStoreTotal">0 UGX</span>
+      </div>
+
+      <div class="form-error" id="inStoreFormError" style="display:none;"></div>
+
+      <button type="button" class="btn-primary btn-pulse" id="recordSaleBtn" style="width:100%; text-align:center; margin-top:14px;">
+        Record Sale
+      </button>
 
     </div>
   </div>

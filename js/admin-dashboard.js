@@ -181,7 +181,7 @@ async function openOrderModal(orderId) {
 
     document.getElementById('modalOrderId').textContent  = `#${order.order_id}`;
     document.getElementById('modalCustomer').textContent = order.customer_name;
-    document.getElementById('modalPhone').textContent    = order.phone_number;
+    document.getElementById('modalPhone').textContent    = order.phone_number || '—';
     document.getElementById('modalZone').textContent     = order.zone_name || '—';
     document.getElementById('modalAddress').textContent  = order.delivery_address;
     document.getElementById('modalPayment').textContent  = order.payment_method;
@@ -260,6 +260,243 @@ document.getElementById('updateStatusBtn').addEventListener('click', async () =>
   } finally {
     btn.disabled    = false;
     btn.textContent = 'Update';
+  }
+});
+
+/* ================================================
+   NEW IN-STORE SALE
+   Lets the admin build a small cart of products +
+   quantities for a walk-in customer, then submits
+   it all as one order via POST /admin/orders/in-store
+================================================ */
+
+let inStoreProducts = [];   // all products, loaded once and reused
+let inStoreCart      = [];   // items added to the current sale in progress
+let inStoreQty       = 1;    // quantity selected via the stepper, for the next item to add
+
+/* -----------------------------------------------
+   QUANTITY STEPPER — +/- buttons next to the
+   product picker, mirrors the public product page
+----------------------------------------------- */
+document.getElementById('inStoreQtyMinus').addEventListener('click', () => {
+  if (inStoreQty > 1) {
+    inStoreQty--;
+    document.getElementById('inStoreQtyValue').textContent = inStoreQty;
+  }
+});
+
+document.getElementById('inStoreQtyPlus').addEventListener('click', () => {
+  inStoreQty++;
+  document.getElementById('inStoreQtyValue').textContent = inStoreQty;
+});
+
+/* -----------------------------------------------
+   LOAD PRODUCTS FOR THE PICKER
+   Endpoint: GET /admin/products
+   Skips products that are out of stock — nothing to
+   sell for them right now.
+----------------------------------------------- */
+async function loadInStoreProducts() {
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/products`);
+    const result   = await response.json();
+    if (!result.success) throw new Error(result.error);
+
+    inStoreProducts = result.data.filter(p => p.in_stock !== false);
+
+    const select = document.getElementById('inStoreProductSelect');
+    select.innerHTML = '';
+
+    inStoreProducts.forEach(product => {
+      const opt = document.createElement('option');
+      opt.value = product.id;
+      const stockHint = product.stock_mode === 'quantity'
+        ? ` (${product.stock_quantity} in stock)`
+        : '';
+      opt.textContent = `${product.name} — ${formatPrice(product.price)}${stockHint}`;
+      select.appendChild(opt);
+    });
+
+    // Show the thumbnail for whichever product ends up selected first
+    updateInStoreProductPreview();
+
+  } catch (err) {
+    console.error('Could not load products for in-store sale:', err);
+  }
+}
+
+/* -----------------------------------------------
+   UPDATE PRODUCT THUMBNAIL PREVIEW
+   Shows the photo of whichever product is currently
+   selected in the dropdown, so the admin can visually
+   confirm it's the right one before adding it.
+----------------------------------------------- */
+function updateInStoreProductPreview() {
+  const select  = document.getElementById('inStoreProductSelect');
+  const preview = document.getElementById('inStoreProductPreview');
+  const productId = parseInt(select.value);
+  const product = inStoreProducts.find(p => p.id === productId);
+
+  if (product && product.image_url) {
+    preview.innerHTML = `<img src="${resolveImageUrl(product.image_url)}" alt="${product.name}"/>`;
+  } else {
+    preview.innerHTML = '🍾';
+  }
+}
+
+document.getElementById('inStoreProductSelect').addEventListener('change', updateInStoreProductPreview);
+
+/* -----------------------------------------------
+   OPEN THE "NEW IN-STORE SALE" MODAL
+   Resets the cart every time it's opened fresh.
+----------------------------------------------- */
+document.getElementById('newInStoreSaleBtn').addEventListener('click', async () => {
+  inStoreCart = [];
+  document.getElementById('inStoreCustomerName').value = '';
+  inStoreQty = 1;
+  document.getElementById('inStoreQtyValue').textContent = inStoreQty;
+  document.getElementById('inStoreFormError').style.display = 'none';
+  renderInStoreCart();
+
+  // Reload products fresh each time, so stock numbers shown are current
+  await loadInStoreProducts();
+
+  document.getElementById('inStoreModal').style.display = 'flex';
+});
+
+document.getElementById('inStoreModalCloseBtn').addEventListener('click', () => {
+  document.getElementById('inStoreModal').style.display = 'none';
+});
+
+document.getElementById('inStoreModal').addEventListener('click', (e) => {
+  if (e.target.id === 'inStoreModal') {
+    document.getElementById('inStoreModal').style.display = 'none';
+  }
+});
+
+/* -----------------------------------------------
+   ADD AN ITEM TO THE IN-PROGRESS SALE
+   Merges with an existing line if the same product
+   was already added once.
+----------------------------------------------- */
+document.getElementById('inStoreAddItemBtn').addEventListener('click', () => {
+  const select  = document.getElementById('inStoreProductSelect');
+  const productId = parseInt(select.value);
+  const quantity  = inStoreQty;
+
+  if (!productId || !quantity || quantity < 1) return;
+
+  const product = inStoreProducts.find(p => p.id === productId);
+  if (!product) return;
+
+  const existing = inStoreCart.find(item => item.product_id === productId);
+  if (existing) {
+    existing.quantity += quantity;
+  } else {
+    inStoreCart.push({
+      product_id: productId,
+      name:       product.name,
+      price:      product.price,
+      quantity:   quantity
+    });
+  }
+
+  // Reset the stepper back to 1 for the next item
+  inStoreQty = 1;
+  document.getElementById('inStoreQtyValue').textContent = inStoreQty;
+
+  renderInStoreCart();
+});
+
+/* -----------------------------------------------
+   RENDER THE RUNNING CART LIST + TOTAL
+----------------------------------------------- */
+function renderInStoreCart() {
+  const itemsEl = document.getElementById('inStoreItems');
+
+  if (inStoreCart.length === 0) {
+    itemsEl.innerHTML = '<p class="instore-empty-state">🍾 No items added yet — start by picking a product above.</p>';
+    document.getElementById('inStoreTotal').textContent = formatPrice(0);
+    return;
+  }
+
+  itemsEl.innerHTML = '';
+  let total = 0;
+
+  inStoreCart.forEach((item, index) => {
+    const lineTotal = parseFloat(item.price) * item.quantity;
+    total += lineTotal;
+
+    const row = document.createElement('div');
+    row.className = 'modal-item-row';
+    row.innerHTML = `
+      <span class="instore-item-name"><span class="instore-bottle-icon">🍾</span>${item.name} × ${item.quantity}</span>
+      <span style="display:flex; align-items:center; gap:10px;">
+        ${formatPrice(lineTotal)}
+        <button type="button" class="btn-remove-in-store-item" data-index="${index}">Remove</button>
+      </span>
+    `;
+    itemsEl.appendChild(row);
+  });
+
+  document.getElementById('inStoreTotal').textContent = formatPrice(total);
+
+  itemsEl.querySelectorAll('.btn-remove-in-store-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      inStoreCart.splice(parseInt(btn.dataset.index), 1);
+      renderInStoreCart();
+    });
+  });
+}
+
+/* -----------------------------------------------
+   RECORD THE SALE
+   Endpoint: POST /admin/orders/in-store
+----------------------------------------------- */
+document.getElementById('recordSaleBtn').addEventListener('click', async () => {
+  const errorEl = document.getElementById('inStoreFormError');
+  const btn     = document.getElementById('recordSaleBtn');
+  errorEl.style.display = 'none';
+
+  if (inStoreCart.length === 0) {
+    errorEl.textContent   = 'Add at least one product before recording the sale.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const customerName = document.getElementById('inStoreCustomerName').value.trim();
+
+  btn.disabled    = true;
+  btn.textContent = 'Recording…';
+
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/orders/in-store`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customer_name: customerName || undefined,
+        items: inStoreCart.map(item => ({
+          product_id: item.product_id,
+          quantity:   item.quantity
+        }))
+      })
+    });
+
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error);
+
+    showToast(`Sale #${result.order_id} recorded — ${formatPrice(result.total)}`);
+    document.getElementById('inStoreModal').style.display = 'none';
+
+    loadOrders();
+    loadStats();
+
+  } catch (err) {
+    errorEl.textContent   = err.message;
+    errorEl.style.display = 'block';
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = 'Record Sale';
   }
 });
 
