@@ -587,7 +587,8 @@ footer {
   .btn-primary::after,
   .btn-buy::after,
   .btn-pulse,
-  .product-badge-alert { animation: none; }
+  .product-badge-alert,
+  .admin-logo { animation: none; }
 }
 /* -----------------------------------------------
    STOCK ALERT BADGE — top-right of the product image,

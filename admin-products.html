@@ -54,31 +54,37 @@
       <div class="orders-header">
         <h2>Products</h2>
 
-        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:16px; width:100%;">
 
-          <!-- Search box — filters by product name as you type -->
-          <div class="admin-search-wrap">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/>
-            </svg>
-            <input type="text" id="productSearch" placeholder="Search products…"/>
+          <!-- Row 1: primary action + search, sort pushed to the far right -->
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+
+            <!-- Add new product button — the first action, pulsing gold
+                 like Record Sale, to draw the eye as the primary action -->
+            <button class="btn-primary btn-pulse" id="addProductBtn" style="padding:10px 22px; font-size:0.78rem;">
+              + Add Product
+            </button>
+
+            <!-- Search box — filters by product name as you type -->
+            <div class="admin-search-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/>
+              </svg>
+              <input type="text" id="productSearch" placeholder="Search products…"/>
+            </div>
+
+            <!-- Sort dropdown — pushed to the right edge of this row -->
+            <select id="productSortSelect" class="admin-sort-select" style="margin-left:auto;">
+              <option value="name-asc">Name A–Z</option>
+              <option value="name-desc">Name Z–A</option>
+            </select>
           </div>
 
-          <!-- Sort dropdown -->
-          <select id="productSortSelect" class="admin-sort-select">
-            <option value="name-asc">Name A–Z</option>
-            <option value="name-desc">Name Z–A</option>
-          </select>
-
-          <!-- Category filter chips — loaded dynamically -->
+          <!-- Row 2: category filter chips — loaded dynamically -->
           <div class="status-filters" id="categoryFilters">
             <button class="status-chip active" data-category="">All</button>
           </div>
 
-          <!-- Add new product button -->
-          <button class="btn-primary" id="addProductBtn" style="padding:10px 22px; font-size:0.78rem;">
-            + Add Product
-          </button>
         </div>
       </div>
 

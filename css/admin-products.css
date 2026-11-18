@@ -34,8 +34,30 @@
   opacity: 1;
   color: var(--gold);
   background: rgba(201, 153, 58, 0.1);
-  border-bottom: 2px solid var(--gold);
+  position: relative;
 }
+
+/* Animated gold underline — grows in from the left instead of
+   appearing as a static border, every time the tab becomes active */
+.admin-tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  transform-origin: left;
+  animation: tabUnderlineGrow 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes tabUnderlineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Small icon before each tab label — purely decorative, no HTML change needed */
+.admin-tab[href="admin-dashboard.html"]::before { content: "📦 "; }
+.admin-tab[href="admin-products.html"]::before  { content: "🍷 "; }
+.admin-tab[href="admin-reports.html"]::before   { content: "📊 "; }
 
 /* -----------------------------------------------
    SEARCH BOX — filters products by name
@@ -330,6 +352,25 @@
   font-size: 0.82rem;
   text-align: center;
 }
+
+/* -----------------------------------------------
+   CATEGORY CHIP ICONS
+   Purely decorative — matched by the exact category
+   name already set as data-category by admin-products.js.
+   The "All" chip (data-category="") gets none.
+----------------------------------------------- */
+.status-chip[data-category="Wine"]::before          { content: "🍷 "; }
+.status-chip[data-category="Whisky"]::before        { content: "🥃 "; }
+.status-chip[data-category="Champagne"]::before     { content: "🍾 "; }
+.status-chip[data-category="Water"]::before         { content: "💧 "; }
+.status-chip[data-category="Energy Drinks"]::before { content: "⚡ "; }
+.status-chip[data-category="Soda"]::before          { content: "🥤 "; }
+.status-chip[data-category="Gin"]::before           { content: "🍸 "; }
+.status-chip[data-category="Vodka"]::before         { content: "🍶 "; }
+.status-chip[data-category="Rum"]::before           { content: "🛢️ "; }
+.status-chip[data-category="Beer"]::before          { content: "🍺 "; }
+.status-chip[data-category="Juice"]::before         { content: "🧃 "; }
+.status-chip[data-category="Cider"]::before         { content: "🍏 "; }
 
 /* -----------------------------------------------
    RESPONSIVE

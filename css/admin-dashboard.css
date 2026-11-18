@@ -47,7 +47,13 @@ body {
 .admin-logo {
   height: 56px;   /* scaled for the shorter admin nav bar, same proportions as the public site */
   width: auto;
-  filter: brightness(0) invert(1);
+  animation: adminLogoGlow 3.5s ease-in-out infinite;
+}
+
+/* Subtle breathing gold glow behind the white logo mark */
+@keyframes adminLogoGlow {
+  0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 0 rgba(201, 153, 58, 0)); }
+  50%      { filter: brightness(0) invert(1) drop-shadow(0 0 7px rgba(201, 153, 58, 0.55)); }
 }
 
 .admin-title {
@@ -110,6 +116,12 @@ body {
   align-items: center;
   gap: 14px;
   margin-bottom: 8px;
+  animation: eyebrowFadeIn 0.6s ease both;
+}
+
+@keyframes eyebrowFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .admin-eyebrow::before {
   content: '';

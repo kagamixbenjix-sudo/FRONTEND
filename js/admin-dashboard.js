@@ -66,6 +66,31 @@ let allOrders = [];
    LOAD DASHBOARD STATS
    Endpoint: GET /admin/stats
 ----------------------------------------------- */
+/* -----------------------------------------------
+   ANIMATE A STAT VALUE FROM 0 TO ITS FINAL NUMBER
+   Runs over ~800ms using requestAnimationFrame.
+   isCurrency formats each intermediate frame as
+   "X UGX" instead of a plain integer.
+----------------------------------------------- */
+function animateStatValue(elementId, endValue, isCurrency) {
+  const el = document.getElementById(elementId);
+  const duration = 800;
+  const start = performance.now();
+
+  function frame(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    // Ease-out, so it settles smoothly instead of stopping abruptly
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const currentValue = Math.round(endValue * eased);
+
+    el.textContent = isCurrency ? formatPrice(currentValue) : currentValue;
+
+    if (progress < 1) requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+}
+
 async function loadStats() {
   try {
     const response = await adminFetch(`${API_BASE}/admin/stats`);
@@ -75,10 +100,10 @@ async function loadStats() {
 
     const stats = result.data;
 
-    document.getElementById('statTotalOrders').textContent   = stats.total_orders;
-    document.getElementById('statPendingOrders').textContent = stats.pending_orders;
-    document.getElementById('statTodayRevenue').textContent  = formatPrice(stats.today_revenue);
-    document.getElementById('statTotalRevenue').textContent  = formatPrice(stats.total_revenue);
+    animateStatValue('statTotalOrders',   stats.total_orders,   false);
+    animateStatValue('statPendingOrders', stats.pending_orders, false);
+    animateStatValue('statTodayRevenue',  stats.today_revenue,  true);
+    animateStatValue('statTotalRevenue',  stats.total_revenue,  true);
 
   } catch (err) {
     console.error('Could not load stats:', err);
